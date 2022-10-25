@@ -3,6 +3,8 @@ import React from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import { Link } from 'react-router-dom';
+import  './Header.css'
 
 
 const Header = () => {
@@ -10,24 +12,24 @@ const Header = () => {
         <div>
             <Navbar collapseOnSelect expand="lg" bg="ligth" variant="ligth" className = "shadow p-3 mb-5 bg-body rounded">
       <Container>
-        <Navbar.Brand href="#home">Digital Course-BD</Navbar.Brand>
+        <Navbar.Brand > <Link to ="/course" className='navstyle'>Digital Course-BD</Link></Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        <Navbar.Collapse id="responsive-navbar-nav">
-        <Nav className="justify-content-end" activeKey="/home">
+        <Navbar.Collapse id="responsive-navbar-nav ">
+        <Nav className ="nav " >
         <Nav.Item>
-          <Nav.Link href="/home">Courses</Nav.Link>
+          <Link  className ="navstyle" to="/">Courses</Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link eventKey="link-1">FAQ</Nav.Link>
+          <Link className ="navstyle" to = "/faq">FAQ</Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link eventKey="link-2">Blog</Nav.Link>
+          <Link  className ="navstyle"to = "/blog">Blog</Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link eventKey="link-3">Log in</Nav.Link>
+          <Link  className ="navstyle"to = "/login">Log in</Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link eventKey="link-4">Register</Nav.Link>
+          <Link className ="navstyle" to = "/register">Register</Link>
         </Nav.Item>
         </Nav>
         </Navbar.Collapse>

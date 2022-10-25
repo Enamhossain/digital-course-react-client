@@ -1,0 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Poiret+One&family=Poppins:ital,wght@0,200;0,500;1,200&family=Shippori+Mincho+B1:wght@500&display=swap');
+
+.navstyle{
+    text-decoration: none;
+    margin-left:15px;
+    font-family: 'Poppins', sans-serif;
+    color: rgb(0, 0, 0);
+
+}
+.nav{
+    margin-left: 70%;
+}
