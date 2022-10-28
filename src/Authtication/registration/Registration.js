@@ -1,36 +1,74 @@
-import { GoogleAuthProvider} from 'firebase/auth';
-import React, { useContext } from 'react';
-import { AuthContext } from '../../context/AuthProvider';
+import { GoogleAuthProvider, TwitterAuthProvider} from 'firebase/auth';
+import React, { useContext, useState } from 'react';
+import { Button } from 'react-bootstrap';
+import toast from 'react-hot-toast';
+import { Link } from 'react-router-dom';
+import  { AuthContext } from '../../context/AuthProvider';
 
 const Registration = () => {
-   const {loginProvider,createuser } = useContext(AuthContext);
-
+   const {providerLogin,createUser,updateUserProfile } = useContext(AuthContext);
+const [error, setError] = useState(null);
    const googleAuth = new GoogleAuthProvider()
+   const twiterProvider = new TwitterAuthProvider();
   
 const  googleSingIn = () => {
-     loginProvider(googleAuth)
+     providerLogin(googleAuth)
      .then(result =>{
         const user = result.user
         console.log(user)
      })
       .catch(error => console.log(error))
 }
-const handleSubmit = (event) => {
-    event.preventDefault()
-    const form = event.target
-    const name = form.nameInput.value
-    const URL = form.photoURlInput.value
-    const email = form.EmailInput.value
-    const password = form.passwordInput.value
-    const confirmPassword = form.confirmpsInput.value
-    console.log(name,URL,email,password,confirmPassword)
-    createuser(email,password)
-    .then(result => {
+
+const  twitterSingIn = () => {
+     providerLogin(twiterProvider)
+     .then(result =>{
         const user = result.user
         console.log(user)
-        form.reset()
-    })
-    .catch(error => console.log(error))
+     })
+      .catch(error => console.log(error))
+}
+
+
+
+const handleSubmit = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const email = form.email.value;
+    const name = form.name.value;
+    const url = form.photo.value;
+    const password = form.password.value;
+    const confirm = form.confirm.value;
+
+    if (password.length < 6) {
+        setError('Password should be 6 characters or more.');
+        return;
+    }
+
+    if (password !== confirm) {
+        setError('Your Password did not match');
+        return;
+    }
+
+    createUser(email, password,name,url)
+        .then(result => {
+            const user = result.user;
+            console.log(user);
+            form.reset();
+            handleUpdateUserProfile(name, url);
+            toast.success('Please verify your email address.')
+        })
+        .catch(error => console.error(error));
+        
+        const handleUpdateUserProfile = (name, url) => {
+          const profile = {
+              displayName: name,
+              url: url
+          }
+          updateUserProfile(profile)
+          .then(() => { })
+          .catch(error => console.error(error));
+  }
 }
 
 
@@ -45,7 +83,7 @@ const handleSubmit = (event) => {
                   type="text"
                   className="form-control"
                   id="nameInput"
-                  name="nameInput"
+                  name="name"
                   aria-describedby="emailHelp"
                   placeholder="Enter Your name"
 
@@ -61,7 +99,7 @@ const handleSubmit = (event) => {
                   type="text"
                   className="form-control"
                   id="photoURlInput"
-                  name="photoURlInput"
+                  name="photo"
                   aria-describedby="emailHelp"
                   placeholder="URL"
 
@@ -77,10 +115,10 @@ const handleSubmit = (event) => {
                   type="email"
                   className="form-control"
                   id="EmailInput"
-                  name="EmailInput"
+                  name="email"
                   aria-describedby="emailHelp"
                   placeholder="Enter email"
-                 
+                 required
                 />
                 <small id="emailHelp" className="text-danger form-text">
                  
@@ -92,8 +130,9 @@ const handleSubmit = (event) => {
                   type="password"
                   className="form-control"
                   id="exampleInputPassword1"
-                  name='passwordInput'
+                  name='password'
                   placeholder="Password"
+                  required
                  
                 />
                 <small id="passworderror" className="text-danger form-text">
@@ -105,9 +144,10 @@ const handleSubmit = (event) => {
                 <input
                   type="password"
                   className="form-control"
-                  name='confirmpsInput'
+                  name='confirm'
                   id="exampleInputConfirmPassword2"
                   placeholder="Confirm Password"
+                  required
                  
                 />
                 <small id="passworderror" className="text-danger form-text">
@@ -129,10 +169,12 @@ const handleSubmit = (event) => {
               <label className='fs-3'>Register With </label>
              
             </form>
-            <div className='d-flex justify-content-center '>
+            <p>Already Have an Account <Link to='/login'>Login</Link></p>
+            <p className='text-danger'>{error}</p>
+            <div className='d-flex justify-content-center'>
                 
-                <button className='mx-2' onClick={googleSingIn}>Google</button>
-                <button >Twitter</button>
+                <Button className='mx-2' onClick={googleSingIn}>Google</Button>
+                <Button onClick = {twitterSingIn} >Twitter</Button>
              </div>
           </div>
          </div>

@@ -1,43 +1,82 @@
-import React from 'react';
-
+import React, { useContext } from 'react';
+import { Button, Image } from 'react-bootstrap';
+import { FaUser } from 'react-icons/fa';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { Link } from 'react-router-dom';
-import  './Header.css'
+
+import { AuthContext } from '../../context/AuthProvider';
+import './Header.css'
 
 
 const Header = () => {
-    return (
-        <div>
-            <Navbar collapseOnSelect expand="lg" bg="ligth" variant="ligth" className = "shadow p-3 mb-5 bg-body rounded">
-      <Container>
-        <Navbar.Brand > <Link to ="/course" className='navstyle'>Digital Course-BD</Link></Navbar.Brand>
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        <Navbar.Collapse id="responsive-navbar-nav ">
-        <Nav className ="nav " >
-        <Nav.Item>
-          <Link  className ="navstyle" to="/">Courses</Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Link className ="navstyle" to = "/faq">FAQ</Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Link  className ="navstyle"to = "/blog">Blog</Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Link  className ="navstyle"to = "/login">Log in</Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Link className ="navstyle" to = "/register">Register</Link>
-        </Nav.Item>
-        </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
-        </div>
-        
-    );
+  const { user, logOut } = useContext(AuthContext);
+
+    const handleLogOut = () => {
+        logOut()
+            .then(() => { })
+            .catch(error => console.error(error))
+    }
+  return (
+    <div>
+      <Navbar collapseOnSelect expand="lg" bg="ligth" variant="ligth" className="shadow p-3 mb-5 bg-body rounded">
+        <Container>
+          <Navbar.Brand > <Link to="/" className='navstyle'>Digital Course-BD</Link></Navbar.Brand>
+          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+          <Navbar.Collapse id="responsive-navbar-nav ">
+            <Nav className="nav " >
+              <Nav.Item>
+                <Link className="navstyle" to="/">Courses</Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Link className="navstyle" to="/faq">FAQ</Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Link className="navstyle" to="/blog">Blog</Link>
+              </Nav.Item>
+
+              <Nav>
+                <>
+                  {
+                    user?.uid ?
+                      <>
+                        <span>{user?.displayName}</span>
+                        <Button variant="light" onClick={handleLogOut}>Log out</Button>
+                      </>
+                      :
+                      <>
+                        <Nav.Item>
+                          <Link className="navstyle" to="/login">Log in</Link>
+                        </Nav.Item>
+                        <Nav.Item>
+                          <Link className="navstyle" to="/register">Register</Link>
+                        </Nav.Item>
+                      </>
+                  }
+
+
+                </>
+                <Link to="/profile">
+                  {user?.photoURL ?
+                    <Image
+                      style={{ height: '30px' }}
+                      roundedCircle
+                      src={user?.photoURL
+                      }>
+                    </Image>
+                    : <FaUser></FaUser>
+                  }
+                </Link>
+              </Nav>
+            </Nav>
+           
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+    </div>
+
+  );
 };
 
 export default Header;

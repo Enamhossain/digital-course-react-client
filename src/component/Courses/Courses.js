@@ -1,9 +1,24 @@
 import React from 'react';
+import { useLoaderData } from 'react-router-dom';
+import ShowCardata from './ShowCard/ShowCardata';
+
 
 const Courses = () => {
+     const allCourses = useLoaderData()
+     console.log(allCourses)
     return (
         <div>
-            <h1>This is Course</h1>
+              
+              <h3>Browse Our Popular Course</h3>
+           {
+              allCourses.map(data => <ShowCardata
+                key = {data._id}
+                data = {data}
+                />)
+             } 
+   
+             
+            
         </div>
     );
 };
