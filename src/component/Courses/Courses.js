@@ -10,6 +10,7 @@ const Courses = () => {
         <div>
               
               <h3>Browse Our Popular Course</h3>
+              
            {
               allCourses.map(data => <ShowCardata
                 key = {data._id}

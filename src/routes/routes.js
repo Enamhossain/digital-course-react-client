@@ -8,6 +8,7 @@ import Courses from "../component/Courses/Courses";
 import Categories from "../component/sideCategories/Categories";
 
 import Main from "../layout/Main";
+import PrivateRouter from "./PrivateRouter";
 
 export const routes = createBrowserRouter([
     {
@@ -16,19 +17,19 @@ export const routes = createBrowserRouter([
         children:[
             {
                 path:'/',
-                element:<Courses/>,
+                element:<PrivateRouter><Courses/></PrivateRouter>,
                 loader:() => fetch ('http://localhost:5000/course')
             },
               
              {
                 path:'/category/:id',
-                element:<Categories></Categories>,
+                element:<PrivateRouter><Categories></Categories></PrivateRouter>  ,
                 loader: ({params}) => fetch (`http://localhost:5000/category/${params.id}`)
              },
         
             {
                 path:'/course/:id',
-                element:<Courses/>,
+                element:<PrivateRouter><Courses/></PrivateRouter>  ,
                 loader:({params}) => fetch (`http://localhost:5000/course/${params.id}`)
             },
            

@@ -1,30 +1,35 @@
-import { GoogleAuthProvider, TwitterAuthProvider} from 'firebase/auth';
+import { GoogleAuthProvider, GithubAuthProvider} from 'firebase/auth';
 import React, { useContext, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import toast from 'react-hot-toast';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import  { AuthContext } from '../../context/AuthProvider';
 
 const Registration = () => {
    const {providerLogin,createUser,updateUserProfile } = useContext(AuthContext);
 const [error, setError] = useState(null);
    const googleAuth = new GoogleAuthProvider()
-   const twiterProvider = new TwitterAuthProvider();
+   const gitProvider = new GithubAuthProvider();
+   const navigate = useNavigate();
+   const location = useLocation()
+   const from = location.state?.from?.pathname || '/';
   
 const  googleSingIn = () => {
      providerLogin(googleAuth)
      .then(result =>{
         const user = result.user
         console.log(user)
+        navigate('/')
      })
       .catch(error => console.log(error))
 }
 
-const  twitterSingIn = () => {
-     providerLogin(twiterProvider)
+const  githubSingIn = () => {
+     providerLogin(gitProvider)
      .then(result =>{
         const user = result.user
         console.log(user)
+        navigate('/')
      })
       .catch(error => console.log(error))
 }
@@ -55,6 +60,7 @@ const handleSubmit = (event) => {
             const user = result.user;
             console.log(user);
             form.reset();
+
             handleUpdateUserProfile(name, url);
             toast.success('Please verify your email address.')
         })
@@ -148,7 +154,7 @@ const handleSubmit = (event) => {
                   id="exampleInputConfirmPassword2"
                   placeholder="Confirm Password"
                   required
-                 
+               
                 />
                 <small id="passworderror" className="text-danger form-text">
                  
@@ -159,6 +165,7 @@ const handleSubmit = (event) => {
                   type="checkbox"
                   className="form-check-input"
                   id="exampleCheck1"
+                
                 />
                 <label className="form-check-label">Check me out</label>
               </div>
@@ -174,7 +181,7 @@ const handleSubmit = (event) => {
             <div className='d-flex justify-content-center'>
                 
                 <Button className='mx-2' onClick={googleSingIn}>Google</Button>
-                <Button onClick = {twitterSingIn} >Twitter</Button>
+                <Button onClick = {githubSingIn} >Github</Button>
              </div>
           </div>
          </div>

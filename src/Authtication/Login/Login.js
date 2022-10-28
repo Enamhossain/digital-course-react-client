@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 
 import toast from 'react-hot-toast';
-import { Form, Link, useLocation, useNavigate } from 'react-router-dom';
+import {  Link, useLocation, useNavigate } from 'react-router-dom';
 
  import { AuthContext } from '../../context/AuthProvider';
 
@@ -10,7 +10,7 @@ const Login = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const location = useLocation()
-  const from = location.state?.from?.pathname || '/course';
+  const from = location.state?.from?.pathname || '/';
 
   const handleSubmit = event =>{
        event.preventDefault();
@@ -22,6 +22,7 @@ const Login = () => {
           const user = result.user;
           console.log(user);
           form.reset();
+          navigate('/')
           
       })
       .catch(error => console.error(error))
