@@ -4,10 +4,15 @@ import app from "../Firebase/Firebase-config";
 
 export const AuthContext = createContext();
 const auth = getAuth(app)
-
 const AuthProvider =({children}) =>{
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+   
+
+   
+  
+
+
     const providerLogin = (provider) => {
         return signInWithPopup(auth, provider);
     }
@@ -38,7 +43,7 @@ const AuthProvider =({children}) =>{
 
     }, [])
 
-    const authInfo = { user, providerLogin, logOut, createUser, signIn,setLoading };
+    const authInfo = { user, providerLogin, logOut, createUser, signIn,setLoading, };
     return (
        <AuthContext.Provider value = {authInfo}>
           {children}

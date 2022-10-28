@@ -4,14 +4,14 @@ import { Outlet } from 'react-router-dom';
  import Category from '../component/Category/Category';
 // import Footer from '../component/Footer/Footer';
 import Header from '../component/Header/Header';
-
+import { Container } from 'react-bootstrap';
 
 import   './Main..css'
 const Main = () => {
     return (
         <div className=''>
            <Header></Header>
-         
+          <Container>
               <Row>
                 <Col lg ='4'>
                     <Category/>
@@ -21,6 +21,8 @@ const Main = () => {
                 </Col>
               </Row>
                 
+          </Container>
+             
              
               
                 

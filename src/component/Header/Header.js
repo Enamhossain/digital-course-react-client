@@ -1,23 +1,32 @@
 import React, { useContext } from 'react';
-import { Button, Image } from 'react-bootstrap';
+import { Button, Image, Form } from 'react-bootstrap';
 import { FaUser } from 'react-icons/fa';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { Link } from 'react-router-dom';
 
+
+
+
 import { AuthContext } from '../../context/AuthProvider';
 import './Header.css'
 
 
 const Header = () => {
-  const { user, logOut } = useContext(AuthContext);
+  const { user, logOut,  } = useContext(AuthContext);
 
-    const handleLogOut = () => {
-        logOut()
-            .then(() => { })
-            .catch(error => console.error(error))
-    }
+  
+
+
+  
+
+
+  const handleLogOut = () => {
+    logOut()
+      .then(() => { })
+      .catch(error => console.error(error))
+  }
   return (
     <div>
       <Navbar collapseOnSelect expand="lg" bg="ligth" variant="ligth" className="shadow p-3 mb-5 bg-body rounded">
@@ -70,9 +79,17 @@ const Header = () => {
                 </Link>
               </Nav>
             </Nav>
-           
+            <Form className="mx-5">
+              <Form.Check 
+                type="switch"
+                id="custom-switch"
+                label="Ligth/Dark"
+              />
+              
+            </Form>
           </Navbar.Collapse>
         </Container>
+
       </Navbar>
     </div>
 

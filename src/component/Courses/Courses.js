@@ -5,7 +5,7 @@ import ShowCardata from './ShowCard/ShowCardata';
 
 const Courses = () => {
      const allCourses = useLoaderData()
-     console.log(allCourses)
+   
     return (
         <div>
               

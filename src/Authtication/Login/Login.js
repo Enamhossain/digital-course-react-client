@@ -1,15 +1,18 @@
 import React, { useContext, useState } from 'react';
-
+import { Button, Container } from 'react-bootstrap';
 import toast from 'react-hot-toast';
+import { GoogleAuthProvider, GithubAuthProvider} from 'firebase/auth';
 import {  Link, useLocation, useNavigate } from 'react-router-dom';
 
  import { AuthContext } from '../../context/AuthProvider';
 
 const Login = () => {
-  const {signIn,setLoading} = useContext(AuthContext);
+  const {signIn,setLoading,providerLogin} = useContext(AuthContext);
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const location = useLocation()
+  const googleAuth = new GoogleAuthProvider()
+  const gitProvider = new GithubAuthProvider();
   const from = location.state?.from?.pathname || '/';
 
   const handleSubmit = event =>{
@@ -48,7 +51,32 @@ const Login = () => {
       .finally(() => {
           setLoading(false);
       })
+
+
   }
+
+  const  googleSingIn = () => {
+    providerLogin(googleAuth)
+    .then(result =>{
+       const user = result.user
+       console.log(user)
+       navigate('/')
+    })
+     .catch(error => console.log(error))
+}
+
+const  githubSingIn = () => {
+    providerLogin(gitProvider)
+    .then(result =>{
+       const user = result.user
+       console.log(user)
+       navigate('/')
+    })
+     .catch(error => console.log(error))
+}
+
+
+
 
 
 
@@ -56,13 +84,14 @@ const Login = () => {
 
     return (
       <div className='container'>
+      <Container> 
       <form onSubmit={handleSubmit} className='card '>
       <h3>Sign In</h3>
       <div className="mb-3">
         <label>Email address</label>
-        <input
+        <input 
           type="email"
-          className="form-control"
+          className="form-control mx-auto"
           placeholder="Enter email"
           name="email"
         />
@@ -71,7 +100,7 @@ const Login = () => {
         <label>Password</label>
         <input
           type="password"
-          className="form-control"
+          className="form-control mx-auto container"
           placeholder="Enter password"
           name="password"
         />
@@ -96,11 +125,15 @@ const Login = () => {
       <p className="forgot-password text-right">
         Forgot <Link href="#">password?</Link>
       </p>
+      <div>
+      <Button className='mx-2' onClick={googleSingIn}>Google</Button>
+                <Button onClick = {githubSingIn} >Github</Button>
+      </div>
        <p>
           {error}
        </p>
     </form>
-    
+    </Container> 
     </div>
    
     );

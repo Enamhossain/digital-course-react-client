@@ -4,6 +4,7 @@ import Registration from "../Authtication/registration/Registration";
 import Blog from "../component/Blog/Blog";
 
 import Courses from "../component/Courses/Courses";
+import Readmore from "../component/readmore/Readmore";
 
 import Categories from "../component/sideCategories/Categories";
 
@@ -45,6 +46,11 @@ export const routes = createBrowserRouter([
             {
                 path:'/login',
                 element:<Login/>
+            },
+            {
+                path:'/readmore/:id',
+                element:<Readmore/>,
+                loader:({params}) => fetch (`http://localhost:5000/course/${params.id}`)
             },
         ]
     },

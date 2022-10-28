@@ -1,9 +1,10 @@
 import React from 'react';
 import { Button, Card, Col, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
 
 const ShowCardata = ({data}) => {
-    const {title, img,details,_id} = data
+    const {title, img,_id} = data
 
     
   
@@ -18,14 +19,9 @@ const ShowCardata = ({data}) => {
             <Card.Body>
               <Card.Title>{title}</Card.Title>
               <Card.Text>
-                  {
-                    details.length > 150 ?
-                    <>{details.slice(0, 150) + '...'} <Link to={`/course/${_id}`}>Read More</Link> </>
-                    :
-                    details
-                  }
+                  
               </Card.Text>
-              <Button  variant="primary">Read More</Button>
+              <Button  variant="dark"> <Link className='text-light' to={`/readmore/${ _id }`}> Read More </Link>   </Button>
             </Card.Body>
           </Card>
         </Col>
