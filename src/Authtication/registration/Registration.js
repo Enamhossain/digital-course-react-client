@@ -1,7 +1,6 @@
 import { GoogleAuthProvider, GithubAuthProvider} from 'firebase/auth';
 import React, { useContext, useState } from 'react';
 import { Button } from 'react-bootstrap';
-import toast from 'react-hot-toast';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import  { AuthContext } from '../../context/AuthProvider';
 
@@ -62,7 +61,7 @@ const handleSubmit = (event) => {
             form.reset();
 
             handleUpdateUserProfile(name, url);
-            toast.success('Please verify your email address.')
+            
         })
         .catch(error => console.error(error));
         

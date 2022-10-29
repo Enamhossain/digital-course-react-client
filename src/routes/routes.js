@@ -25,7 +25,7 @@ export const routes = createBrowserRouter([
              {
                 path:'/category/:id',
                 element:<PrivateRouter><Categories></Categories></PrivateRouter>  ,
-                loader: ({params}) => fetch (`https://digital-course-server-enamhossain.vercel.app/${params.id}`)
+                loader: ({params}) => fetch (`https://digital-course-server-enamhossain.vercel.app/category/${params.id}`)
              },
         
             {
@@ -50,7 +50,7 @@ export const routes = createBrowserRouter([
             {
                 path:'/readmore/:id',
                 element:<Readmore/>,
-                loader:({params}) => fetch (`http://localhost:5000/course/${params.id}`)
+                loader:({params}) => fetch (`https://digital-course-server-enamhossain.vercel.app/course/${params.id}`)
             },
         ]
     },
